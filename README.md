@@ -1,4 +1,3 @@
-dinosaur-comics-panel2
-======================
+### dinosaur-comics-panel2
 
-App that generates a random panel 2 from Dinosaur Comics
+A Flask app that generates a random panel 2 from Dinosaur Comics.
