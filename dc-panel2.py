@@ -31,8 +31,9 @@ def save_panel2(comic_id):
 @app.route('/', methods=['GET'])
 def index():
     max_comic_id = int(get_max_comic_id())
-    save_panel2(randrange(1, max_comic_id+1))
-    return 'a'
+    comic_id = randrange(1, max_comic_id+1)
+    save_panel2(comic_id)
+    return render_template('index.html', comic_id=comic_id)
 
 
 if __name__ == '__main__':

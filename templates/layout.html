@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+    <title>Dinosaur Comics Panel 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel=stylesheet type=text/css href="/static/css/bootstrap.min.css">
+    <link rel=stylesheet type=text/css href="/static/css/bootstrap-theme.min.css">
+</head>
+<body>
+<div id="wrap">
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header navbar-left">
+                <a class="navbar-brand" href="/">Dinosaur Comics Panel 2</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+</div>
+{#<div id="footer">#}
+{#    <div class="container">#}
+{#        <span class="footer-copyright pull-left">© 2014 <a class="visible-xs" target="_blank" href="https://github.com/vape/weight-monitor">@vape</a> <a class="hidden-xs" target="_blank" href="https://github.com/vape/weight-monitor">Taylan Aydınlı</a></span>#}
+{#        <span class="footer-icon-container pull-left text-center"><a href="/" title="WeightMon" id="footer-icon"></a></span>#}
+{#        <span class="footer-lang-sel pull-right">#}
+{#            <div class="btn-group dropup pull-right">#}
+{#              <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">{{ _('Language') }} <span class="caret"></span></button>#}
+{#              <ul class="dropdown-menu">#}
+{#                  {% for l in LANGUAGES %}#}
+{#                      <li><a href="{{ url_for_lang(l) }}"><i class="flag flag-{{ l }}"></i> {{ lang_name(l) }}</a></li>#}
+{#                  {% endfor %}#}
+{#              </ul>#}
+{#            </div>#}
+{#        </span>#}
+{#    </div>#}
+{#</div>#}
+
+<script type="text/javascript" src="/static/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+</body>
+</html>
