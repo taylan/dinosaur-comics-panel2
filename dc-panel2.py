@@ -19,8 +19,9 @@ def get_max_comic_id():
 
 
 panels = {
-    1: {'left': 0, 'top': 0, 'width': 244, 'height': 243},
-    2: {'left': 243, 'top': 0, 'width': 131, 'height': 244}
+    1: {'left': 0, 'top': 0, 'width': 244, 'height': 244},
+    2: {'left': 243, 'top': 0, 'width': 131, 'height': 244},
+    3: {'left': 373, 'top': 0, 'width': 362, 'height': 244}
 }
 
 
@@ -29,19 +30,6 @@ def _crop_panel(filename, panel):
     with Image(filename=filename) as img:
         img.crop(**panels[panel])
         img.save(filename='{0}_{1}{2}'.format(fn[0], panel, fn[1]))
-
-
-def _resize_image(filename):
-    try_count = 0
-    while try_count < 3 and True:
-        try:
-            with Image(filename=filename) as img:
-                img.crop(left=243, top=0, width=131, height=244)
-                img.save(filename=filename)
-                break
-        except:
-            try_count += 1
-            continue
 
 
 def save_comic(comic_id):
@@ -65,7 +53,7 @@ def save_panel(comic_id, panel):
 def index():
     max_comic_id = int(get_max_comic_id())
     comic_id = randrange(1, max_comic_id + 1)
-    panel = 1
+    panel = 3
     save_panel(comic_id, panel)
     return render_template('index.html', comic_id=comic_id, panel=panel)
 
