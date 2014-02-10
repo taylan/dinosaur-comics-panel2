@@ -16,16 +16,19 @@ def get_max_comic_id():
 
 
 def _resize_image(filename):
-    try:
-        with Image(filename=filename) as img:
-            img.crop(243, 0, width=131, height=244)
-            img.save(filename=filename)
-            return True
-    except:
-        return False
+    try_count = 0
+    while try_count < 3 and True:
+        try:
+            with Image(filename=filename) as img:
+                img.crop(left=243, top=0, width=131, height=244)
+                img.save(filename=filename)
+                break
+        except:
+            try_count += 1
+            continue
 
 
-def save_panel2(comic_id):
+def save_comic(comic_id):
     r = get(BS(get('http://www.qwantz.com/index.php?comic={0}'.format(comic_id), headers=hdrs).text).select('.comic')[0]['src'], stream=True)
     fn = path.join(path.dirname(__file__), 'static/comics/{0}.png'.format(comic_id))
     if r.status_code == 200:
@@ -33,10 +36,11 @@ def save_panel2(comic_id):
             for chunk in r.iter_content(1024):
                 f.write(chunk)
 
-    while True:
-        result = _resize_image(fn)
-        if result:
-            break
+
+def save_panel2(comic_id):
+    fn = path.join(path.dirname(__file__), 'static/comics/{0}.png'.format(comic_id))
+    save_comic(comic_id)
+    _resize_image(fn)
 
 
 @app.route('/', methods=['GET'])
