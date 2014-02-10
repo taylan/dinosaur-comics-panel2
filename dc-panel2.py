@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, render_template
 from requests import get
 from bs4 import BeautifulSoup as BS
 from re import compile
@@ -7,12 +7,28 @@ from os import path
 from wand.image import Image
 
 app = Flask(__name__)
-hdrs = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36'}
+hdrs = {
+'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36'}
 comic_id_re = compile(r'comic=(\d+)$')
 
 
 def get_max_comic_id():
-    return comic_id_re.search(BS(get('http://www.qwantz.com/index.php', headers=hdrs).text).find('meta', attrs={'property': 'og:url'})['content']).group(1)
+    return comic_id_re.search(
+        BS(get('http://www.qwantz.com/index.php', headers=hdrs).text).find('meta', attrs={'property': 'og:url'})[
+            'content']).group(1)
+
+
+panels = {
+    1: {'left': 0, 'top': 0, 'width': 244, 'height': 243},
+    2: {'left': 243, 'top': 0, 'width': 131, 'height': 244}
+}
+
+
+def _crop_panel(filename, panel):
+    fn = path.splitext(filename)
+    with Image(filename=filename) as img:
+        img.crop(**panels[panel])
+        img.save(filename='{0}_{1}{2}'.format(fn[0], panel, fn[1]))
 
 
 def _resize_image(filename):
@@ -29,7 +45,9 @@ def _resize_image(filename):
 
 
 def save_comic(comic_id):
-    r = get(BS(get('http://www.qwantz.com/index.php?comic={0}'.format(comic_id), headers=hdrs).text).select('.comic')[0]['src'], stream=True)
+    r = get(
+        BS(get('http://www.qwantz.com/index.php?comic={0}'.format(comic_id), headers=hdrs).text).select('.comic')[0][
+            'src'], stream=True)
     fn = path.join(path.dirname(__file__), 'static/comics/{0}.png'.format(comic_id))
     if r.status_code == 200:
         with open(fn, 'wb') as f:
@@ -37,18 +55,19 @@ def save_comic(comic_id):
                 f.write(chunk)
 
 
-def save_panel2(comic_id):
+def save_panel(comic_id, panel):
     fn = path.join(path.dirname(__file__), 'static/comics/{0}.png'.format(comic_id))
     save_comic(comic_id)
-    _resize_image(fn)
+    _crop_panel(fn, panel)
 
 
 @app.route('/', methods=['GET'])
 def index():
     max_comic_id = int(get_max_comic_id())
-    comic_id = randrange(1, max_comic_id+1)
-    save_panel2(comic_id)
-    return render_template('index.html', comic_id=comic_id)
+    comic_id = randrange(1, max_comic_id + 1)
+    panel = 1
+    save_panel(comic_id, panel)
+    return render_template('index.html', comic_id=comic_id, panel=panel)
 
 
 if __name__ == '__main__':
