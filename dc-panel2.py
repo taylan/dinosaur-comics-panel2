@@ -1,23 +1,13 @@
 from flask import Flask, render_template
-from requests import get
-from bs4 import BeautifulSoup as BS
 from random import randrange
 from os import path
 from wand.image import Image
-from dinosaurcomics import get_max_comic_id
+from dinosaurcomics import get_max_comic_id, panels
+from dinosaurcomics.DCComic import DCComic
 
 app = Flask(__name__)
 hdrs = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36'}
-COMIC_URL = 'http://www.qwantz.com/index.php?comic={0}'
-
-panels = {
-    1: {'left': 0, 'top': 0, 'width': 244, 'height': 244},
-    2: {'left': 243, 'top': 0, 'width': 131, 'height': 244},
-    3: {'left': 373, 'top': 0, 'width': 362, 'height': 244},
-    4: {'left': 0, 'top': 242, 'width': 195, 'height': 244},
-    5: {'left': 194, 'top': 242, 'width': 299, 'height': 244},
-    6: {'left': 493, 'top': 242, 'width': 244, 'height': 244}
-}
+comics_dir = path.join(path.dirname(__file__), 'static/comics')
 
 
 def _crop_panel(filename, panel):
@@ -27,18 +17,10 @@ def _crop_panel(filename, panel):
         img.save(filename='{0}_{1}{2}'.format(fn[0], panel, fn[1]))
 
 
-def save_comic(comic_id):
-    r = get(BS(get(COMIC_URL.format(comic_id), headers=hdrs).text).select('.comic')[0]['src'], stream=True)
-    fn = path.join(path.dirname(__file__), 'static/comics/{0}.png'.format(comic_id))
-    if r.status_code == 200:
-        with open(fn, 'wb') as f:
-            for chunk in r.iter_content(1024):
-                f.write(chunk)
-
-
 def save_panel(comic_id, panel):
     fn = path.join(path.dirname(__file__), 'static/comics/{0}.png'.format(comic_id))
-    save_comic(comic_id)
+    comic = DCComic(comic_id, comics_dir)
+    comic.save_comic()
     _crop_panel(fn, panel)
 
 
