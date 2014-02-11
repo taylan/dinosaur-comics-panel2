@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from random import randrange
 from os import path
-from dinosaurcomics import get_max_comic_id
+from dinosaurcomics import get_random_comic_id
 from dinosaurcomics.DCComic import DCComic
 
 app = Flask(__name__)
@@ -17,8 +17,7 @@ def save_panel(comic_id, panel):
 
 @app.route('/', methods=['GET'])
 def index():
-    max_comic_id = int(get_max_comic_id())
-    comic_id = randrange(1, max_comic_id + 1)
+    comic_id = get_random_comic_id()
     panel = 6
     save_panel(comic_id, panel)
     return render_template('index.html', comic_id=comic_id, panel=panel)

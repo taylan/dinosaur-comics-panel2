@@ -1,6 +1,7 @@
 from requests import get
 from bs4 import BeautifulSoup as BS
 from re import compile
+from random import randrange
 
 comic_id_re = compile(r'comic=(\d+)$')
 DC_HOME_URL = 'http://www.qwantz.com/index.php'
@@ -19,7 +20,11 @@ panels = {
 
 def get_max_comic_id():
     max_id_url = BS(get(DC_HOME_URL, headers=hdrs).text).find('meta', attrs={'property': 'og:url'})['content']
-    return comic_id_re.search(max_id_url).group(1)
+    return int(comic_id_re.search(max_id_url).group(1))
 
 
-__all__ = ['get_max_comic_id', 'panels']
+def get_random_comic_id():
+    return randrange(1, get_max_comic_id() + 1)
+
+
+__all__ = ['get_max_comic_id', 'get_random_comic_id', 'panels']
