@@ -7,15 +7,15 @@ from os import path
 from wand.image import Image
 
 app = Flask(__name__)
-hdrs = {
-'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36'}
+hdrs = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36'}
 comic_id_re = compile(r'comic=(\d+)$')
+COMIC_URL = 'http://www.qwantz.com/index.php?comic={0}'
+DC_HOME_URL = 'http://www.qwantz.com/index.php'
 
 
 def get_max_comic_id():
-    return comic_id_re.search(
-        BS(get('http://www.qwantz.com/index.php', headers=hdrs).text).find('meta', attrs={'property': 'og:url'})[
-            'content']).group(1)
+    max_id_url = BS(get(DC_HOME_URL, headers=hdrs).text).find('meta', attrs={'property': 'og:url'})['content']
+    return comic_id_re.search(max_id_url).group(1)
 
 
 panels = {
@@ -36,9 +36,7 @@ def _crop_panel(filename, panel):
 
 
 def save_comic(comic_id):
-    r = get(
-        BS(get('http://www.qwantz.com/index.php?comic={0}'.format(comic_id), headers=hdrs).text).select('.comic')[0][
-            'src'], stream=True)
+    r = get(BS(get(COMIC_URL.format(comic_id), headers=hdrs).text).select('.comic')[0]['src'], stream=True)
     fn = path.join(path.dirname(__file__), 'static/comics/{0}.png'.format(comic_id))
     if r.status_code == 200:
         with open(fn, 'wb') as f:
