@@ -1,22 +1,14 @@
 from flask import Flask, render_template
 from requests import get
 from bs4 import BeautifulSoup as BS
-from re import compile
 from random import randrange
 from os import path
 from wand.image import Image
+from dinosaurcomics import get_max_comic_id
 
 app = Flask(__name__)
 hdrs = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36'}
-comic_id_re = compile(r'comic=(\d+)$')
 COMIC_URL = 'http://www.qwantz.com/index.php?comic={0}'
-DC_HOME_URL = 'http://www.qwantz.com/index.php'
-
-
-def get_max_comic_id():
-    max_id_url = BS(get(DC_HOME_URL, headers=hdrs).text).find('meta', attrs={'property': 'og:url'})['content']
-    return comic_id_re.search(max_id_url).group(1)
-
 
 panels = {
     1: {'left': 0, 'top': 0, 'width': 244, 'height': 244},
