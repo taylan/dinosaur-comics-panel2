@@ -21,7 +21,10 @@ def get_max_comic_id():
 panels = {
     1: {'left': 0, 'top': 0, 'width': 244, 'height': 244},
     2: {'left': 243, 'top': 0, 'width': 131, 'height': 244},
-    3: {'left': 373, 'top': 0, 'width': 362, 'height': 244}
+    3: {'left': 373, 'top': 0, 'width': 362, 'height': 244},
+    4: {'left': 0, 'top': 242, 'width': 195, 'height': 244},
+    5: {'left': 194, 'top': 242, 'width': 299, 'height': 244},
+    6: {'left': 493, 'top': 242, 'width': 244, 'height': 244}
 }
 
 
@@ -53,7 +56,7 @@ def save_panel(comic_id, panel):
 def index():
     max_comic_id = int(get_max_comic_id())
     comic_id = randrange(1, max_comic_id + 1)
-    panel = 3
+    panel = 6
     save_panel(comic_id, panel)
     return render_template('index.html', comic_id=comic_id, panel=panel)
 
