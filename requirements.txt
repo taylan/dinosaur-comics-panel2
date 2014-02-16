@@ -1,7 +1,7 @@
 Flask==0.10.1
 Jinja2==2.7.2
 MarkupSafe==0.18
-PyPrind==2.1.1
+PyPrind==2.2.0
 Wand==0.3.5
 Werkzeug==0.9.4
 beautifulsoup4==4.3.2
