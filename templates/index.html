@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-    <div class="container col-lg-4 col-lg-offset-4">
+    <div class="container col-lg-4 col-lg-offset-4 text-center">
         <a target="_blank" href="http://www.qwantz.com/index.php?comic={{ comic_id }}"><img class="img-thumbnail" src="/static/comics/{{ comic_id }}_{{ panel }}.png"></a>
+        <div class="text-center">
+            <a href="http://www.qwantz.com/index.php?comic={{ comic_id }}">Dinosaur Comics #{{ comic_id }}</a>
+        </div>
     </div>
 {% endblock %}
