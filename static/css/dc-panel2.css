@@ -1,18 +1,18 @@
 @media (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+    .container {
+        max-width: 730px;
+    }
 }
 
 .container {
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .footer {
     margin-top: 5px;
-  padding-top: 5px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+    padding: 5px 10px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
 }
 
