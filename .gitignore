@@ -38,3 +38,4 @@ nosetests.xml
 .idea
 _ENV
 .DS_Store
+max_comic_id

@@ -38,7 +38,7 @@ def ajax_random_panel(panel=2):
 
 @app.route('/', methods=['GET'])
 def index():
-    # comic_id = _do_random_panel(2)
+    comic_id = _do_random_panel(2)
     return render_template('index.html', comic_id=191, panel=2)
 
 

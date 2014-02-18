@@ -2,10 +2,13 @@ from requests import get
 from bs4 import BeautifulSoup as BS
 from re import compile
 from random import randrange
+from os.path import abspath, dirname, realpath, join, getmtime
+from datetime import datetime
 
 comic_id_re = compile(r'comic=(\d+)$')
 DC_HOME_URL = 'http://www.qwantz.com/index.php'
 COMIC_URL = 'http://www.qwantz.com/index.php?comic={0}'
+CACHE_FN = abspath(join(dirname(realpath(__file__)), '..', 'max_comic_id'))
 hdrs = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36'}
 
 panels = {
@@ -18,9 +21,32 @@ panels = {
 }
 
 
+def _get_max_comic_id_cached():
+    try:
+        if (datetime.now() - datetime.fromtimestamp(getmtime(CACHE_FN))).days > 1:
+            return None
+        with open(CACHE_FN) as cache_file:
+            return int(cache_file.read())
+    except (FileNotFoundError, ValueError, OSError):
+        return None
+
+
+def _cache_max_comic_id(max_comic_id):
+    try:
+        with open(CACHE_FN, mode='w') as cache_file:
+            cache_file.write(str(max_comic_id))
+    except:
+        pass
+
+
 def get_max_comic_id():
-    max_id_url = BS(get(DC_HOME_URL, headers=hdrs).text).find('meta', attrs={'property': 'og:url'})['content']
-    return int(comic_id_re.search(max_id_url).group(1))
+    max_comic_id = _get_max_comic_id_cached()
+    if not max_comic_id:
+        max_id_url = BS(get(DC_HOME_URL, headers=hdrs).text).find('meta', attrs={'property': 'og:url'})['content']
+        max_comic_id = int(comic_id_re.search(max_id_url).group(1))
+        _cache_max_comic_id(max_comic_id)
+
+    return max_comic_id
 
 
 def get_random_comic_id():
