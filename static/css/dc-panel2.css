@@ -9,6 +9,15 @@
     margin-bottom: 20px;
 }
 
+.dc-panel {
+    min-height: 244px;
+    min-width: 130px;
+}
+
+.random-panel-button-container {
+    margin-top: 20px;
+}
+
 .footer {
     margin-top: 5px;
     padding: 5px 10px;

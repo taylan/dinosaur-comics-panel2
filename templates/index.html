@@ -1,9 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
     <div class="container col-lg-4 col-lg-offset-4 text-center">
-        <a target="_blank" href="http://www.qwantz.com/index.php?comic={{ comic_id }}"><img class="img-thumbnail" src="/static/comics/{{ comic_id }}_{{ panel }}.png"></a>
-        <div class="text-center">
-            <a href="http://www.qwantz.com/index.php?comic={{ comic_id }}">Dinosaur Comics #{{ comic_id }}</a>
+        <div id="dc-panel-2" class="dc-panel"></div>
+        <div class="random-panel-button-container">
+            <a href="#" class="btn btn-primary btn-lg" id="random-panel-button">Another Random Panel 2</a>
         </div>
     </div>
+{% endblock %}
+{% block pagescripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            doRandomPanel(2);
+            $('#random-panel-button').click(function(e){
+                $(this).attr('disabled', 'disabled');
+                e.preventDefault();
+                doRandomPanel(2, function(){
+                    $('#random-panel-button').attr('disabled', '');
+                });
+            });
+        });
+    </script>
 {% endblock %}

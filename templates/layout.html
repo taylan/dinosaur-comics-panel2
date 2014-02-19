@@ -29,7 +29,6 @@
             <li><a href="#">About</a></li>
         </ul>
     </div>
-    <!-- /.nav-collapse -->
 </div>
 
 <div class="container">
@@ -41,8 +40,19 @@
     </p>
 </div>
 
+<script type="text/html" id="single-panel-template">
+    <a target="_blank" href="http://www.qwantz.com/index.php?comic={{'{{comic_id}}'}}"><img class="img-thumbnail" src="/static/comics/{{'{{comic_id}}_{{panel}}'}}.png"></a>
+    <div class="text-center">
+        <a href="http://www.qwantz.com/index.php?comic={{'{{comic_id}}'}}">Dinosaur Comics #{{'{{comic_id}}'}}</a>
+    </div>
+</script>
+
 <script type="text/javascript" src="/static/js/jquery-2.1.0.min.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="/static/js/spin.min.js"></script>
+<script type="text/javascript" src="/static/js/mustache.js"></script>
+<script type="text/javascript" src="/static/js/jquery.mustache.js"></script>
+<script type="text/javascript" src="/static/js/dc-panel2.js"></script>
+{% block pagescripts %}{% endblock %}
 </body>
 </html>

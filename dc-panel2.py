@@ -5,6 +5,8 @@ from dinosaurcomics.DCComic import DCComic
 
 app = Flask(__name__)
 comics_dir = path.join(path.dirname(__file__), 'static/comics')
+comic_img_template = '/static/comics/{0}_{1}.png'
+comic_url_template = 'http://www.qwantz.com/index.php?comic={0}'
 
 
 def save_panel(comic_id, panel):
@@ -28,18 +30,15 @@ def random_panel(panel=2):
 @app.route('/a/random-panel/<int:panel>', methods=['GET'])
 def ajax_random_panel(panel=2):
     comic_id = _do_random_panel(panel)
-    return jsonify({'comic': comic_id, 'panel': panel,
-                    'panel_url': '/static/comics/{0}_{1}.png'.format(comic_id,
-                                                                     panel),
-                    'comic_url': 'http://www.qwantz.com/index.php?comic={0}'.format(
-                        comic_id)}
-    )
+    return jsonify({'comic_id': comic_id,
+                    'panel': panel,
+                    'panel_url': comic_img_template.format(comic_id, panel),
+                    'comic_url': comic_url_template.format(comic_id)})
 
 
 @app.route('/', methods=['GET'])
 def index():
-    comic_id = _do_random_panel(2)
-    return render_template('index.html', comic_id=191, panel=2)
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
