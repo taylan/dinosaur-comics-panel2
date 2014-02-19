@@ -10,14 +10,14 @@
 {% block pagescripts %}
     <script type="text/javascript">
         $(document).ready(function () {
-            doRandomPanel(2);
             $('#random-panel-button').click(function(e){
-                $(this).attr('disabled', 'disabled');
+                $(this).attr('disabled', true);
                 e.preventDefault();
                 doRandomPanel(2, function(){
-                    $('#random-panel-button').attr('disabled', '');
+                    $('#random-panel-button').attr('disabled', false);
                 });
             });
+            $('#random-panel-button').click();
         });
     </script>
 {% endblock %}

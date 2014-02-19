@@ -28,6 +28,7 @@ function doRandomPanel(panel, callback) {
         })
         .always(function(){
             spinners[panel-1].stop();
+            console.log(typeof callback);
             if(typeof callback == 'function')
                 callback();
         });
