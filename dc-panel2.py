@@ -2,11 +2,17 @@ from flask import Flask, render_template, jsonify, redirect, request
 from os import path
 from dinosaurcomics import get_random_comic_id, get_max_comic_id, panels
 from dinosaurcomics.DCComic import DCComic
+from flask.ext.assets import Environment, Bundle
 
 app = Flask(__name__)
 comics_dir = path.join(path.dirname(__file__), 'static/comics')
 comic_img_template = '/static/comics/{0}_{1}.png'
 comic_url_template = 'http://www.qwantz.com/index.php?comic={0}'
+
+assets = Environment(app)
+assets.register('all_js', Bundle('js/jquery-2.1.0.min.js', 'js/bootstrap.min.js', 'js/spin.min.js', 'js/mustache.js',
+                                 'js/jquery.mustache.js', 'js/dc-panel2.js', filters='rjsmin', output='gen/weightmon-packed.js'))
+assets.register('all_css', Bundle('css/bootstrap.min.css', 'css/dc-panel2.css', output='gen/dc-panel2-packed.css'))
 
 
 def save_panel(comic_id, panel):
