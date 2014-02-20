@@ -16,6 +16,7 @@
                 doRandomPanel({{ panel }}, "", afterPanelLoadCallback);
             });
 
+            $('#random-panel-button').attr('disabled', true);
             doRandomPanel({{ panel }}, {{ comic_id if comic_id else '""'|safe }}, afterPanelLoadCallback);
         });
     </script>

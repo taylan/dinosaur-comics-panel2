@@ -27,15 +27,13 @@ def _do_panel(panel, comic_id=None):
     return comic_id
 
 
+@app.route('/', methods=['GET'])
 @app.route('/random-panel/<int:panel>', methods=['GET'])
-def random_panel(panel=2):
-    return render_template('index.html', panel=panel)
-
-
-@app.route('/random-panel/<int:panel>/comic/', endpoint='rand-panel-no-comic', methods=['GET'])
+@app.route('/random-panel/<int:panel>/comic/', endpoint='rand-panel-no-comic', defaults={'comic_id': None}, methods=['GET'])
 @app.route('/random-panel/<int:panel>/comic/<int:comic_id>', endpoint='rand-panel-specific-comic', methods=['GET'])
-def specific_panel(panel, comic_id):
-    if panel not in panels.keys() or comic_id > get_max_comic_id():
+def random_panel(panel=2, comic_id=None):
+    panel = panel if panel in panels.keys() else 2
+    if comic_id and not 0 < comic_id < get_max_comic_id():
         return redirect('/')
     return render_template('index.html', comic_id=comic_id, panel=panel)
 
@@ -49,11 +47,6 @@ def ajax_random_panel(panel=2, comic_id=0):
                     'panel': panel,
                     'panel_url': comic_img_template.format(comic_id, panel),
                     'comic_url': comic_url_template.format(comic_id)})
-
-
-@app.route('/', methods=['GET'])
-def index():
-    return render_template('index.html', panel=2)
 
 
 if __name__ == '__main__':
