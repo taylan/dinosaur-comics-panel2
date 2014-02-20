@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup as BS
 from re import compile
 from random import randrange
 from os.path import abspath, dirname, realpath, join, getmtime
-from datetime import datetime
+from datetime import datetime as dt
 
 comic_id_re = compile(r'comic=(\d+)$')
 DC_HOME_URL = 'http://www.qwantz.com/index.php'
@@ -23,7 +23,7 @@ panels = {
 
 def _get_max_comic_id_cached():
     try:
-        if (datetime.now() - datetime.fromtimestamp(getmtime(CACHE_FN))).days > 1:
+        if (dt.now() - dt.fromtimestamp(getmtime(CACHE_FN))).total_seconds() // 3600 > 24:
             return None
         with open(CACHE_FN) as cache_file:
             return int(cache_file.read())
@@ -34,6 +34,7 @@ def _get_max_comic_id_cached():
 def _cache_max_comic_id(max_comic_id):
     try:
         with open(CACHE_FN, mode='w') as cache_file:
+            print('caching')
             cache_file.write(str(max_comic_id))
     except:
         pass
