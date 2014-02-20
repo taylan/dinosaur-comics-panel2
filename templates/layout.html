@@ -44,6 +44,10 @@
     <div class="text-center">
         <a href="http://www.qwantz.com/index.php?comic={{'{{comic_id}}'}}">Dinosaur Comics #{{'{{comic_id}}'}}</a>
     </div>
+    <div class="input-group" id="share-section">
+        <span class="input-group-addon">Share Panel:</span>
+        <input type="text" class="form-control" id="share-panel-url" value="{{ url_for('rand-panel-no-comic', panel=panel, _external=True) }}{{ '{{comic_id}}' }}">
+    </div>
 </script>
 
 <script type="text/javascript" src="/static/js/jquery-2.1.0.min.js"></script>

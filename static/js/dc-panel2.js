@@ -17,22 +17,40 @@ var spinnerOpts = {
   left: 'auto' // Left position relative to parent in px
 };
 
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) {
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
 var spinners = new Array(6);
 
-function doRandomPanel(panel, callback) {
+function doRandomPanel(panel, comic_id, callback) {
     $("#dc-panel-"+panel).html('');
     spinners[panel-1] = new Spinner(spinnerOpts).spin($("#dc-panel-"+panel)[0]);
-    $.get('/a/random-panel/' + panel)
+    $.get('/a/random-panel/{0}/comic/{1}'.format(panel, comic_id))
         .done(function(data){
             $('#dc-panel-'+panel).html($.Mustache.render('single-panel-template', data));
         })
         .always(function(){
             spinners[panel-1].stop();
-            console.log(typeof callback);
             if(typeof callback == 'function')
                 callback();
         });
 }
+
+var afterPanelLoadCallback = function(){
+    $('#random-panel-button').attr('disabled', false);
+    $('#share-panel-url').focus(function(){
+        $(this).select();
+    }).mouseup(function (e) {e.preventDefault(); });
+};
 
 $(document).ready(function(){
     $.Mustache.addFromDom();
