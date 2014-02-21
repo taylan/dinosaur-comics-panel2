@@ -34,7 +34,6 @@ def _get_max_comic_id_cached():
 def _cache_max_comic_id(max_comic_id):
     try:
         with open(CACHE_FN, mode='w') as cache_file:
-            print('caching')
             cache_file.write(str(max_comic_id))
     except:
         pass

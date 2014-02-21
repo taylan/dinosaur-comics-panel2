@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, redirect, request
+from flask import Flask, render_template, jsonify, redirect
 from os import path
 from dinosaurcomics import get_random_comic_id, get_max_comic_id, panels
 from dinosaurcomics.DCComic import DCComic
