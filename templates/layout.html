@@ -31,7 +31,7 @@
               </ul>
             </li>
             <li><a href="#">Random Comic</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#about">About</a></li>
         </ul>
     </div>
 </div>
@@ -54,6 +54,20 @@
         <input type="text" class="form-control" id="share-panel-url" value="{{ url_for('rand-panel-no-comic', panel=panel, _external=True) }}{{ '{{comic_id}}' }}">
     </div>
 </script>
+
+<div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="aboutLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="aboutLabel">About</h4>
+      </div>
+      <div class="modal-body">
+          <small>Feel free to fork and contribute to this app on <a target="_blank" href="https://github.com/vape/dinosaur-comics-panel2">GitHub</a>.</small>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% assets 'all_js' %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
 {% block pagescripts %}{% endblock %}

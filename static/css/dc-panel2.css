@@ -22,9 +22,12 @@
     margin-top: 10px;
 }
 
+.modal-header {
+    padding: 7px 15px;
+}
+
 .footer {
     margin-top: 5px;
     padding: 5px 10px;
     border-top: 1px solid #e5e5e5;
 }
-
