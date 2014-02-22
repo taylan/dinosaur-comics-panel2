@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
     <div class="container col-lg-8 col-lg-offset-2 text-center">
-        <div id="dc-panel-2" class="dc-panel"></div>
+        <div id="dc-panel-{{ panel }}" class="dc-panel"></div>
         <div class="random-panel-button-container">
             <a href="#" class="btn btn-primary btn-lg" id="random-panel-button">Another Random Panel {{ panel }}</a>
         </div>

@@ -8,6 +8,7 @@ app = Flask(__name__)
 comics_dir = path.join(path.dirname(__file__), 'static/comics')
 comic_img_template = '/static/comics/{0}_{1}.png'
 comic_url_template = 'http://www.qwantz.com/index.php?comic={0}'
+app.jinja_env.globals['PANELS'] = panels
 
 assets = Environment(app)
 assets.register('all_js', Bundle('js/jquery-2.1.0.min.js', 'js/bootstrap.min.js', 'js/spin.min.js', 'js/mustache.js',
@@ -28,7 +29,7 @@ def _do_panel(panel, comic_id=None):
 
 
 @app.route('/', methods=['GET'])
-@app.route('/random-panel/<int:panel>', methods=['GET'])
+@app.route('/random-panel/<int:panel>', endpoint='rand-panel', methods=['GET'])
 @app.route('/random-panel/<int:panel>/comic/', endpoint='rand-panel-no-comic', defaults={'comic_id': None}, methods=['GET'])
 @app.route('/random-panel/<int:panel>/comic/<int:comic_id>', endpoint='rand-panel-specific-comic', methods=['GET'])
 def random_panel(panel=2, comic_id=None):

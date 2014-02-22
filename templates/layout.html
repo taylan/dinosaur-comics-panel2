@@ -22,9 +22,15 @@
     </div>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav navbar-right">
-            <li><a class="active" href="/">Random Panel 2</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Random Panel <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                  {% for p in PANELS %}
+                    <li><a href="{{ url_for('rand-panel', panel=p) }}">Random Panel {{ p }}</a></li>
+                  {% endfor %}
+              </ul>
+            </li>
             <li><a href="#">Random Comic</a></li>
-            <li><a href="#">Random Panel</a></li>
             <li><a href="#">About</a></li>
         </ul>
     </div>
@@ -41,10 +47,10 @@
 <script type="text/html" id="single-panel-template">
     <a target="_blank" href="http://www.qwantz.com/index.php?comic={{'{{comic_id}}'}}"><img class="img-thumbnail" src="/static/comics/{{'{{comic_id}}_{{panel}}'}}.png"></a>
     <div class="text-center">
-        <a href="http://www.qwantz.com/index.php?comic={{'{{comic_id}}'}}">Dinosaur Comics #{{'{{comic_id}}'}}</a>
+        <a href="http://www.qwantz.com/index.php?comic={{'{{comic_id}}'}}">#{{'{{comic_id}}'}}</a>
     </div>
     <div class="input-group" id="share-section">
-        <span class="input-group-addon">Share Panel:</span>
+        <span class="input-group-addon">Share:</span>
         <input type="text" class="form-control" id="share-panel-url" value="{{ url_for('rand-panel-no-comic', panel=panel, _external=True) }}{{ '{{comic_id}}' }}">
     </div>
 </script>
