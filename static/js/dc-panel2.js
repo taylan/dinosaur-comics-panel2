@@ -45,8 +45,17 @@ function doRandomPanel(panel, comic_id, callback) {
         });
 }
 
+var afterLinkCopyCallback = function(client, args) {
+    $("#zclip-addon").addClass('copied');
+    setTimeout(function(){
+        $("#zclip-addon").removeClass('copied');
+    }, 500);
+};
+
 var afterPanelLoadCallback = function(){
     $('#random-panel-button').attr('disabled', false);
+    var zcClient = new ZeroClipboard(document.getElementById("copy-button"));
+    zcClient.on('complete', afterLinkCopyCallback);
     $('#share-panel-url').focus(function(){
         $(this).select();
     }).mouseup(function (e) {e.preventDefault(); });
@@ -54,4 +63,5 @@ var afterPanelLoadCallback = function(){
 
 $(document).ready(function(){
     $.Mustache.addFromDom();
+    ZeroClipboard.config( { moviePath: '/static/js/ZeroClipboard.swf' } );
 });

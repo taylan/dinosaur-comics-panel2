@@ -10,7 +10,7 @@
 }
 
 .dc-panel {
-    min-height: 244px;
+    min-height: 320px;
     min-width: 130px;
 }
 
@@ -21,6 +21,28 @@
 #share-section {
     margin-top: 10px;
 }
+
+#share-section label {
+    margin: 0;
+}
+
+#share-section #zclip-addon {
+    padding: 6px;
+}
+
+#share-section .form-control {
+    box-shadow: none;
+}
+
+#zclip-addon {
+        color:#000;
+        -webkit-transition: background 0.5s linear;
+        -moz-transition: background 0.5s linear;
+        -ms-transition: background 0.5s linear;
+        -o-transition: background 0.5s linear;
+        transition: background 0.5s linear;
+}
+#zclip-addon.copied { background-color: #28b62c; }
 
 .modal-header {
     padding: 7px 15px;

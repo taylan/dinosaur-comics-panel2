@@ -12,7 +12,7 @@ app.jinja_env.globals['PANELS'] = panels
 
 assets = Environment(app)
 assets.register('all_js', Bundle('js/jquery-2.1.0.min.js', 'js/bootstrap.min.js', 'js/spin.min.js', 'js/mustache.js',
-                                 'js/jquery.mustache.js', 'js/dc-panel2.js', filters='rjsmin', output='gen/weightmon-packed.js'))
+                                 'js/jquery.mustache.js', 'js/dc-panel2.js', 'js/ZeroClipboard.min.js', filters='rjsmin', output='gen/weightmon-packed.js'))
 assets.register('all_css', Bundle('css/bootstrap.min.css', 'css/dc-panel2.css', output='gen/dc-panel2-packed.css'))
 
 
