@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, redirect
+from flask import Flask, render_template, jsonify, redirect, request
 from os import path
 from dinosaurcomics import get_random_comic_id, get_max_comic_id, panels
 from dinosaurcomics.DCComic import DCComic
@@ -31,6 +31,19 @@ def _do_panel(panel, comic_id=None):
 @app.route('/random-comic')
 def random_comic():
     return render_template('comic.html')
+
+
+@app.route('/a/random-comic', methods=['GET', 'POST'])
+def random_panels():
+    rand_panels = []
+    for p in panels.keys():
+        comic_id = _do_panel(p, None)
+        rand_panels.append({'comic_id': comic_id,
+                    'panel': p,
+                    'panel_url': comic_img_template.format(comic_id, p),
+                    'comic_url': comic_url_template.format(comic_id)})
+
+    return jsonify({'panels': rand_panels})
 
 
 @app.route('/', methods=['GET'])

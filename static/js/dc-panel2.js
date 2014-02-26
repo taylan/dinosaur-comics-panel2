@@ -29,25 +29,51 @@ if (!String.prototype.format) {
 }
 
 var spinners = new Array(6);
-
-function doRandomPanel(panel, comic_id, callback) {
+function startSpinner(panel) {
     $("#dc-panel-"+panel).html('');
     spinners[panel-1] = new Spinner(spinnerOpts).spin($("#dc-panel-"+panel)[0]);
+}
+
+function stopSpinner(panel) {
+    spinners[panel-1].stop();
+}
+
+function renderPanel(p, template, data) {
+    $('#dc-panel-'+p).html($.Mustache.render(template, data));
+}
+
+function doRandomPanel(panel, comic_id, callback) {
+    startSpinner(panel)
     $.get('/a/random-panel/{0}/comic/{1}'.format(panel, comic_id))
         .done(function(data){
-            $('#dc-panel-'+panel).html($.Mustache.render('comic-panel-template', data));
+            renderPanel(panel, 'single-panel-template', data)
         })
         .always(function(){
-            spinners[panel-1].stop();
+            stopSpinner(panel)
             if(typeof callback == 'function')
                 callback();
         });
 }
 
 function doRandomComic() {
+    $('#random-comic-button').attr('disabled', true);
+    $('#dc-panel-footer').hide();
     $("#comic-container .comic-panel").each(function(i) {
-        doRandomPanel(i+1, '');
+        startSpinner(i+1);
     });
+    $.post('/a/random-comic')
+        .done(function(data){
+            $.each(data.panels, function(i, p){
+                renderPanel(p.panel, 'comic-panel-template', p);
+            });
+        })
+        .always(function(){
+            $("#comic-container .comic-panel").each(function(i) {
+                stopSpinner(i+1);
+            });
+            $('#dc-panel-footer').show();
+            $('#random-comic-button').attr('disabled', false);
+        })
 }
 
 var afterLinkCopyCallback = function(client, args) {
@@ -64,10 +90,6 @@ var afterPanelLoadCallback = function(){
     $('#share-panel-url').focus(function(){
         $(this).select();
     }).mouseup(function (e) {e.preventDefault(); });
-};
-
-var afterComicLoadCallback = function(){
-    $('#random-comic-button').attr('disabled', false);
 };
 
 $(document).ready(function(){

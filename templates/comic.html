@@ -11,7 +11,7 @@
             <div id="dc-panel-footer"><a href="http://www.qwantz.com" target="_blank"><img src="/static/img/comic-footer.png"></a></div>
         </div>
     <div class="random-panel-button-container">
-        <a href="#" class="btn btn-primary btn-lg" id="random-comic-button">Another Random Comic</a>
+        <a href="{{ url_for('random_comic') }}" class="btn btn-primary btn-lg" id="random-comic-button">Another Random Comic</a>
     </div>
     </div>
 {% endblock %}
@@ -19,12 +19,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#random-comic-button').click(function (e) {
-//{#                $(this).attr('disabled', true);#}
                 e.preventDefault();
                 doRandomComic();
             });
 
-//{#            $('#random-panel-button').attr('disabled', true);#}
             doRandomComic();
         });
     </script>
