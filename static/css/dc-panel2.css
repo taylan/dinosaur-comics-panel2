@@ -10,8 +10,8 @@
 }
 
 #comic-container {
-    width: 738px;
-    height: 550px;
+    width: 735px;
+    height: 520px;
     margin: 0px auto;
 }
 
@@ -49,7 +49,7 @@
 }
 
 #comic-container #dc-panel-6 {
-    width: 244px;
+    width: 242px;
 }
 
 #comic-container #dc-panel-footer {
@@ -71,7 +71,8 @@
 }
 
 .random-panel-button-container {
-    margin-top: 20px;
+    margin-top: 10px;
+    width: 735px;
 }
 
 #share-section {
