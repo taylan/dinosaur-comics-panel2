@@ -17,16 +17,23 @@
 
 #comic-container .comic-panel {
     float: left;
+    height: 242px;
+}
+
+#comic-container .comic-row-1 {
+    height: 242px;
+}
+
+#comic-container .comic-row-2 {
     height: 244px;
-    /*border: 1px solid purple;*/
 }
 
 #comic-container #dc-panel-1 {
-    width: 244px;
+    width: 243px;
 }
 
 #comic-container #dc-panel-2 {
-    width: 131px;
+    width: 130px;
 }
 
 #comic-container #dc-panel-3 {
@@ -34,7 +41,7 @@
 }
 
 #comic-container #dc-panel-4 {
-    width: 195px;
+    width: 194px;
 }
 
 #comic-container #dc-panel-5 {
@@ -49,7 +56,13 @@
     width: 735px;
     height: 13px;
     float: left;
-    /*border: 1px solid slateblue;*/
+    display: inline-block;
+    position: relative;
+}
+
+#dc-panel-footer img {
+    position: absolute;
+    top: 0;
 }
 
 .dc-panel {

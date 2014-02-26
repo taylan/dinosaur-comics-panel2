@@ -12,10 +12,10 @@ CACHE_FN = abspath(join(dirname(realpath(__file__)), '..', 'max_comic_id'))
 hdrs = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36'}
 
 panels = {
-    1: {'left': 0, 'top': 0, 'width': 244, 'height': 244},
-    2: {'left': 243, 'top': 0, 'width': 131, 'height': 244},
-    3: {'left': 373, 'top': 0, 'width': 362, 'height': 244},
-    4: {'left': 0, 'top': 242, 'width': 195, 'height': 244},
+    1: {'left': 0, 'top': 0, 'width': 243, 'height': 242},
+    2: {'left': 243, 'top': 0, 'width': 130, 'height': 242},
+    3: {'left': 373, 'top': 0, 'width': 362, 'height': 242},
+    4: {'left': 0, 'top': 242, 'width': 194, 'height': 244},
     5: {'left': 194, 'top': 242, 'width': 299, 'height': 244},
     6: {'left': 493, 'top': 242, 'width': 244, 'height': 244}
 }

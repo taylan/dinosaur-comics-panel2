@@ -2,29 +2,29 @@
 {% block body %}
     <div>
         <div id="comic-container">
-            <div id="dc-panel-1" class="comic-panel">c1</div>
-            <div id="dc-panel-2" class="comic-panel">c2</div>
-            <div id="dc-panel-3" class="comic-panel">c3</div>
-            <div id="dc-panel-4" class="comic-panel">c4</div>
-            <div id="dc-panel-5" class="comic-panel">c5</div>
-            <div id="dc-panel-6" class="comic-panel">c6</div>
-            <div id="dc-panel-footer"><img src="/static/img/comic-footer.png"></div>
+            <div id="dc-panel-1" class="comic-panel comic-row-1">c1</div>
+            <div id="dc-panel-2" class="comic-panel comic-row-1">c2</div>
+            <div id="dc-panel-3" class="comic-panel comic-row-1">c3</div>
+            <div id="dc-panel-4" class="comic-panel comic-row-2">c4</div>
+            <div id="dc-panel-5" class="comic-panel comic-row-2">c5</div>
+            <div id="dc-panel-6" class="comic-panel comic-row-2">c6</div>
+            <div id="dc-panel-footer"><a href="http://www.qwantz.com" target="_blank"><img src="/static/img/comic-footer.png"></a></div>
         </div>
     <div class="random-panel-button-container">
-                <a href="#" class="btn btn-primary btn-lg" id="random-comic-button">Another Random Comic</a>
-            </div>
+        <a href="#" class="btn btn-primary btn-lg" id="random-comic-button">Another Random Comic</a>
+    </div>
     </div>
 {% endblock %}
 {% block pagescripts %}
     <script type="text/javascript">
         $(document).ready(function () {
             $('#random-comic-button').click(function (e) {
-{#                $(this).attr('disabled', true);#}
+//{#                $(this).attr('disabled', true);#}
                 e.preventDefault();
                 doRandomComic();
             });
 
-{#            $('#random-panel-button').attr('disabled', true);#}
+//{#            $('#random-panel-button').attr('disabled', true);#}
             doRandomComic();
         });
     </script>
