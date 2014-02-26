@@ -30,7 +30,7 @@
                   {% endfor %}
               </ul>
             </li>
-            <li><a href="#">Random Comic</a></li>
+            <li><a href="{{ url_for('random_comic') }}">Random Comic</a></li>
             <li><a href="#" data-toggle="modal" data-target="#about">About</a></li>
         </ul>
     </div>
@@ -51,9 +51,13 @@
     </div>
     <div class="input-group" id="share-section">
         <span class="input-group-addon"><label for="share-panel-url">Share:</label></span>
-        <input type="text" class="form-control" id="share-panel-url" value="{{ url_for('rand-panel-no-comic', panel=panel, _external=True) }}{{ '{{comic_id}}' }}">
+        <input type="text" class="form-control" id="share-panel-url" value="{{ url_for('rand-panel-no-comic', panel=panel or 2, _external=True) }}{{ '{{comic_id}}' }}">
         <span class="input-group-addon" id="zclip-addon"><button id="copy-button" title="Copy Link" data-clipboard-target="share-panel-url"><span class="glyphicon glyphicon-file"></span></button></span>
     </div>
+</script>
+
+<script type="text/html" id="comic-panel-template">
+    <a target="_blank" href="http://www.qwantz.com/index.php?comic={{'{{comic_id}}'}}"><img src="/static/comics/{{'{{comic_id}}_{{panel}}'}}.png"></a>
 </script>
 
 <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="aboutLabel" aria-hidden="true">

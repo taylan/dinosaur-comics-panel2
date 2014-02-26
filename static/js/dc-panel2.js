@@ -23,8 +23,7 @@ if (!String.prototype.format) {
     return this.replace(/{(\d+)}/g, function(match, number) {
       return typeof args[number] != 'undefined'
         ? args[number]
-        : match
-      ;
+        : match;
     });
   };
 }
@@ -36,13 +35,19 @@ function doRandomPanel(panel, comic_id, callback) {
     spinners[panel-1] = new Spinner(spinnerOpts).spin($("#dc-panel-"+panel)[0]);
     $.get('/a/random-panel/{0}/comic/{1}'.format(panel, comic_id))
         .done(function(data){
-            $('#dc-panel-'+panel).html($.Mustache.render('single-panel-template', data));
+            $('#dc-panel-'+panel).html($.Mustache.render('comic-panel-template', data));
         })
         .always(function(){
             spinners[panel-1].stop();
             if(typeof callback == 'function')
                 callback();
         });
+}
+
+function doRandomComic() {
+    $("#comic-container .comic-panel").each(function(i) {
+        doRandomPanel(i+1, '');
+    });
 }
 
 var afterLinkCopyCallback = function(client, args) {
@@ -59,6 +64,10 @@ var afterPanelLoadCallback = function(){
     $('#share-panel-url').focus(function(){
         $(this).select();
     }).mouseup(function (e) {e.preventDefault(); });
+};
+
+var afterComicLoadCallback = function(){
+    $('#random-comic-button').attr('disabled', false);
 };
 
 $(document).ready(function(){

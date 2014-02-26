@@ -28,6 +28,11 @@ def _do_panel(panel, comic_id=None):
     return comic_id
 
 
+@app.route('/random-comic')
+def random_comic():
+    return render_template('comic.html')
+
+
 @app.route('/', methods=['GET'])
 @app.route('/random-panel/<int:panel>', endpoint='rand-panel', methods=['GET'])
 @app.route('/random-panel/<int:panel>/comic/', endpoint='rand-panel-no-comic', defaults={'comic_id': None}, methods=['GET'])
