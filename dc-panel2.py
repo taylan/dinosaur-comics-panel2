@@ -51,14 +51,10 @@ def _parse_panels(ps):
     return pnls
 
 
-@app.route('/random-comic')
-def random_comic():
-    return render_template('comic.html')
-
-
+@app.route('/random-comic', defaults={'ps': None})
 @app.route('/random-comic/p/<ps>', endpoint='rand-comic-w-panels')
-def comic(ps):
-    pnls = _parse_panels(ps)
+def random_comic(ps=None):
+    pnls = _parse_panels(ps) if ps else None
     return render_template('comic.html', pnls=pnls)
 
 
