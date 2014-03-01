@@ -2,15 +2,18 @@
 {% block body %}
     <div>
         <div id="comic-container">
-            <div id="dc-panel-1" class="comic-panel comic-row-1">c1</div>
-            <div id="dc-panel-2" class="comic-panel comic-row-1">c2</div>
-            <div id="dc-panel-3" class="comic-panel comic-row-1">c3</div>
-            <div id="dc-panel-4" class="comic-panel comic-row-2">c4</div>
-            <div id="dc-panel-5" class="comic-panel comic-row-2">c5</div>
-            <div id="dc-panel-6" class="comic-panel comic-row-2">c6</div>
+            <div id="dc-panel-1" class="comic-panel comic-row-1"></div>
+            <div id="dc-panel-2" class="comic-panel comic-row-1"></div>
+            <div id="dc-panel-3" class="comic-panel comic-row-1"></div>
+            <div id="dc-panel-4" class="comic-panel comic-row-2"></div>
+            <div id="dc-panel-5" class="comic-panel comic-row-2"></div>
+            <div id="dc-panel-6" class="comic-panel comic-row-2"></div>
             <div id="dc-panel-footer"><a href="http://www.qwantz.com" target="_blank"><img src="/static/img/comic-footer.png"></a></div>
         </div>
-        <div class="random-panel-button-container text-center">
+        <div class="input-group" id="share-section">
+
+        </div>
+        <div class="random-comic-button-container text-center">
             <a href="{{ url_for('random_comic') }}" class="btn btn-primary btn-lg" id="random-comic-button">Another Random Comic</a>
         </div>
     </div>
@@ -23,7 +26,7 @@
                 doRandomComic();
             });
 
-            doRandomComic();
+            doRandomComic({{ pnls if pnls else '{}'|safe }});
         });
     </script>
 {% endblock %}

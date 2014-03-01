@@ -55,24 +55,26 @@ function doRandomPanel(panel, comic_id, callback) {
         });
 }
 
-function doRandomComic() {
+function doRandomComic(panels) {
     $('#random-comic-button').attr('disabled', true);
-    $('#dc-panel-footer').hide();
+    $('#dc-panel-footer, #share-section').hide();
     $("#comic-container .comic-panel").each(function(i) {
         startSpinner(i+1);
     });
-    $.post('/a/random-comic')
+    $.post('/a/random-comic', {p: JSON.stringify(panels)})
         .done(function(data){
             $.each(data.panels, function(i, p){
                 renderPanel(p.panel, 'comic-panel-template', p);
             });
+            $('#share-section').html($.Mustache.render('panel-share-section-template', data));
         })
         .always(function(){
             $("#comic-container .comic-panel").each(function(i) {
                 stopSpinner(i+1);
             });
-            $('#dc-panel-footer').show();
+            $('#dc-panel-footer, #share-section').show();
             $('#random-comic-button').attr('disabled', false);
+            setUpZeroClipboard();
         })
 }
 
@@ -83,13 +85,17 @@ var afterLinkCopyCallback = function(client, args) {
     }, 500);
 };
 
-var afterPanelLoadCallback = function(){
-    $('#random-panel-button').attr('disabled', false);
+function setUpZeroClipboard() {
     var zcClient = new ZeroClipboard(document.getElementById("copy-button"));
     zcClient.on('complete', afterLinkCopyCallback);
-    $('#share-panel-url').focus(function(){
+    $('#share-url').focus(function() {
         $(this).select();
     }).mouseup(function (e) {e.preventDefault(); });
+}
+
+var afterPanelLoadCallback = function(){
+    $('#random-panel-button').attr('disabled', false);
+    setUpZeroClipboard();
 };
 
 $(document).ready(function(){
