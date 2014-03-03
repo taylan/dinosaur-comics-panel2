@@ -39,7 +39,18 @@ function stopSpinner(panel) {
 }
 
 function renderPanel(p, template, data) {
-    $('#dc-panel-' + p).html($.Mustache.render(template, data));
+    $('#dc-panel-' + p)
+        .html($.Mustache.render(template, data))
+        .data('comic', data.comic_id)
+        .data('panel', p);
+}
+
+function getLockedPanels() {
+    var panels = {};
+    $('.comic-panel.locked').each(function(i, p) {
+        panels[$(p).data('panel')] = $(p).data('comic');
+    });
+    return panels;
 }
 
 function doRandomPanel(panel, comic_id, callback) {
@@ -61,6 +72,7 @@ function doRandomComic(panels) {
     $("#comic-container .comic-panel").each(function(i) {
         startSpinner(i + 1);
     });
+
     $.post('/a/random-comic', {p: JSON.stringify(panels)})
         .done(function(data) {
             $.each(data.panels, function(i, p) {
@@ -103,4 +115,15 @@ var afterPanelLoadCallback = function() {
 $(document).ready(function() {
     $.Mustache.addFromDom();
     ZeroClipboard.config({ moviePath: '/static/js/ZeroClipboard.swf' });
+
+    $(document).on('click', '.comic-panel-lock', function(e) {
+        e.preventDefault();
+        $(this).parent('.comic-panel').toggleClass('locked');
+    });
+
+    $('#comic-container').hover(function(e) {
+        $('.comic-panel-lock').fadeIn();
+    }, function(e) {
+        $('.comic-panel-lock').fadeOut();
+    });
 });

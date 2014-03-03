@@ -23,7 +23,7 @@
         $(document).ready(function () {
             $('#random-comic-button').click(function (e) {
                 e.preventDefault();
-                doRandomComic();
+                doRandomComic(getLockedPanels());
             });
 
             doRandomComic({{ pnls if pnls else '{}'|safe }});

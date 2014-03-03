@@ -20,6 +20,19 @@
     height: 242px;
 }
 
+.comic-panel .comic-panel-lock {
+    color: #aaa;
+    position: relative;
+    left: 3px;
+    bottom: 20px;
+    padding: 3px;
+    display: none;
+}
+
+.comic-panel.locked .comic-panel-lock {
+    color: #D60000;
+}
+
 #comic-container .comic-row-1 {
     height: 242px;
 }
