@@ -23,7 +23,8 @@ class DCComic():
         if path.exists(fn):
             return
 
-        r = get(BS(get(COMIC_URL.format(self._comic_id), headers=hdrs).text).select('.comic')[0]['src'], stream=True)
+        soup = BS(get(COMIC_URL.format(self._comic_id), headers=hdrs).text)
+        r = get(soup.select('.comic')[0]['src'], stream=True)
         if r.status_code == 200:
             with open(fn, 'wb') as f:
                 for chunk in r.iter_content(1024):

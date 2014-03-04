@@ -51,26 +51,30 @@ def _parse_panels(ps):
     return pnls
 
 
-@app.route('/random-comic', defaults={'ps': None})
-@app.route('/random-comic/p/<ps>', endpoint='rand-comic-w-panels')
-def random_comic(ps=None):
-    pnls = _parse_panels(ps) if ps else None
-    return render_template('comic.html', pnls=pnls)
-
-
 @app.route('/a/random-comic', methods=['POST'])
 def random_panels():
     pnls = loads(request.form.get('p', '{}'))
-    rand_panels = []
+    rnd_panels = []
     for p in panels.keys():
         comic_id = _do_panel(p, pnls.get(str(p), None))
-        rand_panels.append({'comic_id': comic_id,
+        rnd_panels.append({'comic_id': comic_id,
                             'panel': p,
                             'panel_url': comic_img_template.format(comic_id, p),
                             'comic_url': comic_url_template.format(comic_id)})
 
-    return jsonify({'panels': rand_panels,
-                    'panel_ids': '_'.join(['{0}-{1}'.format(x['panel'], x['comic_id']) for x in rand_panels])})
+    panelids = ['{0}-{1}'.format(x['panel'], x['comic_id']) for x in rnd_panels]
+    return jsonify({'panels': rnd_panels, 'panel_ids': '_'.join(panelids)})
+
+
+@app.route('/a/random-panel/<int:panel>/comic/', methods=['GET'])
+@app.route('/a/random-panel/<int:panel>/comic/<int:comic_id>', methods=['GET'])
+def ajax_random_panel(panel=2, comic_id=0):
+    cid = None if not comic_id or comic_id > get_max_comic_id() else comic_id
+    comic_id = _do_panel(panel, cid)
+    return jsonify({'comic_id': comic_id,
+                    'panel': panel,
+                    'panel_url': comic_img_template.format(comic_id, panel),
+                    'comic_url': comic_url_template.format(comic_id)})
 
 
 @app.route('/', methods=['GET'])
@@ -86,15 +90,11 @@ def random_panel(panel=2, comic_id=None):
     return render_template('index.html', comic_id=comic_id, panel=panel)
 
 
-@app.route('/a/random-panel/<int:panel>/comic/', methods=['GET'])
-@app.route('/a/random-panel/<int:panel>/comic/<int:comic_id>', methods=['GET'])
-def ajax_random_panel(panel=2, comic_id=0):
-    cid = None if not comic_id or comic_id > get_max_comic_id() else comic_id
-    comic_id = _do_panel(panel, cid)
-    return jsonify({'comic_id': comic_id,
-                    'panel': panel,
-                    'panel_url': comic_img_template.format(comic_id, panel),
-                    'comic_url': comic_url_template.format(comic_id)})
+@app.route('/random-comic', defaults={'ps': None})
+@app.route('/random-comic/p/<ps>', endpoint='rand-comic-w-panels')
+def random_comic(ps=None):
+    pnls = _parse_panels(ps) if ps else None
+    return render_template('comic.html', pnls=pnls)
 
 
 if __name__ == '__main__':

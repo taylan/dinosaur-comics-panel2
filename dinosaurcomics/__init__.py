@@ -42,7 +42,8 @@ def _cache_max_comic_id(max_comic_id):
 def get_max_comic_id():
     max_comic_id = _get_max_comic_id_cached()
     if not max_comic_id:
-        max_id_url = BS(get(DC_HOME_URL, headers=hdrs).text).find('meta', attrs={'property': 'og:url'})['content']
+        soup = BS(get(DC_HOME_URL, headers=hdrs).text)
+        max_id_url = soup.find('meta', attrs={'property': 'og:url'})['content']
         max_comic_id = int(comic_id_re.search(max_id_url).group(1))
         _cache_max_comic_id(max_comic_id)
 
