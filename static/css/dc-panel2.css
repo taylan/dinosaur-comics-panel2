@@ -11,8 +11,8 @@
 
 #comic-container {
     width: 735px;
-    height: 520px;
-    margin: 0px auto;
+    height: 500px;
+    margin: 0px auto 20px auto;
 }
 
 #comic-container .comic-panel {
