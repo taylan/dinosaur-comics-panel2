@@ -81,8 +81,12 @@ def ajax_random_panel(panel=2, comic_id=0):
 @app.route('/random-panel/<int:panel>', endpoint='rand-panel', methods=['GET'])
 @app.route('/random-panel/<int:panel>/comic/', endpoint='rand-panel-no-comic',
            defaults={'comic_id': None}, methods=['GET'])
+@app.route('/rp/<int:panel>/c/', endpoint='rand-panel-no-comic-short',
+           defaults={'comic_id': None}, methods=['GET'])
 @app.route('/random-panel/<int:panel>/comic/<int:comic_id>',
            endpoint='rand-panel-specific-comic', methods=['GET'])
+@app.route('/rp/<int:panel>/c/<int:comic_id>',
+           endpoint='rand-panel-specific-comic-short', methods=['GET'])
 def random_panel(panel=2, comic_id=None):
     panel = panel if panel in panels.keys() else 2
     if comic_id and not 0 < comic_id < get_max_comic_id():
@@ -91,7 +95,8 @@ def random_panel(panel=2, comic_id=None):
 
 
 @app.route('/random-comic', defaults={'ps': None})
-@app.route('/random-comic/p/<ps>', endpoint='rand-comic-w-panels')
+@app.route('/random-comic/<ps>', endpoint='rand-comic-w-panels')
+@app.route('/rc/<ps>', endpoint='rand-comic-w-panels-short')
 def random_comic(ps=None):
     pnls = _parse_panels(ps) if ps else None
     return render_template('comic.html', pnls=pnls)

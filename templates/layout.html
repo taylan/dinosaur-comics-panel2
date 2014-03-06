@@ -51,7 +51,7 @@
     </div>
     <div class="input-group" id="share-section">
         <span class="input-group-addon"><label for="share-url">Share:</label></span>
-        <input type="text" class="form-control" id="share-url" value="{{ url_for('rand-panel-no-comic', panel=panel or 2, _external=True) }}{{ '{{comic_id}}' }}">
+        <input type="text" class="form-control" id="share-url" value="{{ url_for('rand-panel-no-comic-short', panel=panel or 2, _external=True) }}{{ '{{comic_id}}' }}">
         <span class="input-group-addon" id="zclip-addon"><button id="copy-button" title="Copy Link" data-clipboard-target="share-url"><span class="glyphicon glyphicon-file"></span></button></span>
     </div>
 </script>
@@ -63,7 +63,7 @@
 
 <script type="text/html" id="panel-share-section-template">
     <span class="input-group-addon"><label for="share-url">Share:</label></span>
-    <input type="text" class="form-control" id="share-url" value="{{ url_for('rand-comic-w-panels', ps='', _external=True) }}{{ '{{panel_ids}}' }}">
+    <input type="text" class="form-control" id="share-url" value="{{ url_for('rand-comic-w-panels-short', ps='', _external=True) }}{{ '{{panel_ids}}' }}">
     <span class="input-group-addon" id="zclip-addon"><button id="copy-button" title="Copy Link" data-clipboard-target="share-url"><span class="glyphicon glyphicon-file"></span></button></span>
 </script>
 
